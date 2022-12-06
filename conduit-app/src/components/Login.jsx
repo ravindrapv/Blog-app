@@ -1,12 +1,13 @@
 import React from 'react'
+import { Link, Route } from 'react-router-dom'
 
 export default function Login() {
     return (
         <>
             <section>
-                <div className="w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <div className="w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800 mt-16">
                     <div className="px-6 py-4">
-                        <h2 className="text-3xl font-bold text-center text-gray-700 dark:text-white">Brand</h2>
+                        <h2 className="text-3xl font-bold text-center text-gray-700 dark:text-white">Login</h2>
 
                         <h3 className="mt-1 text-xl font-medium text-center text-gray-600 dark:text-gray-200">Welcome Back</h3>
 
@@ -22,7 +23,7 @@ export default function Login() {
                             </div>
 
                             <div className="flex items-center justify-between mt-4">
-                                <a href="#" className="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500">Forget Password?</a>
+                                <Link path='/' className="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500">Forget Password?</Link>
 
                                 <button className="px-6 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                                     Sign In
@@ -30,11 +31,13 @@ export default function Login() {
                             </div>
                         </form>
                     </div>
-
                     <div className="flex items-center justify-center py-4 text-center bg-gray-50 dark:bg-gray-700">
                         <span className="text-sm text-gray-600 dark:text-gray-200">Don't have an account? </span>
+                        <Route>
 
-                        <a href="#" className="mx-2 text-sm font-bold text-blue-500 dark:text-blue-400 hover:underline">Register</a>
+                            <Link to='/Registreation' className="mx-2 text-sm font-bold text-blue-500 dark:text-blue-400 hover:underline">Register</Link>
+
+                        </Route>
                     </div>
                 </div>
             </section>

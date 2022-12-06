@@ -2,17 +2,27 @@ import Heder from "./Heder";
 import Hero from "./Hero";
 import Home from "./Home";
 import Login from './Login'
-import Regisration from './Registreation'
+import Article from "./Article";
+import Registreation from './Registreation'
+import { Route } from 'react-router-dom'
 
 function App() {
   return (
     <>
       <Heder />
-      <Hero />
-      <h1 className=" text-center">hello world</h1>
-      <Home />
-      <Login />
-      <Regisration />
+      <Route path="/" exact>
+        <Hero />
+        <Home />
+      </Route>
+      <Route path="/Login">
+        <Login />
+      </Route>
+      <Route path="/Registreation">
+        <Registreation />
+      </Route>
+      <Route path='/Article'>
+        <Article />
+      </Route>
     </>
   );
 }

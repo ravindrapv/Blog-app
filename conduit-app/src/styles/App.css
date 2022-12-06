@@ -47,3 +47,36 @@ table {
   border-spacing: 0;
 }
 
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  background-color: #f4f4f4;
+}
+
+
+.active{
+  color: orangered;
+}
+
+h2{
+  color: rgb(81, 81, 204);
+}
+
+h1{
+  color:rgb(131, 212, 131);
+}
+
+
+.artical-main{
+  display: flex;
+  justify-content: space-around;
+  border: 2px solid black;
+}
