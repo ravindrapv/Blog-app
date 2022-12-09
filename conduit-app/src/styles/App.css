@@ -63,7 +63,7 @@ body {
 
 
 .active{
-  color: orangered;
+  color: rgb(247, 0, 255);
 }
 
 h2{
@@ -80,4 +80,9 @@ h1{
 
 :disabled{
   background-color: gray;
+}
+
+.center{
+ margin: 0 auto;
+ padding: 0 32px;
 }

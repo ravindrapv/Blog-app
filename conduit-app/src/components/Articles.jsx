@@ -56,6 +56,10 @@ export default class Articles extends Component {
         this.setState({ activePage: index }, this.fetchData);
     };
 
+    componentWillUnmount() {
+        this.fetchData(false);
+    }
+
     render() {
         console.log(this.state.articles);
         const {
@@ -64,7 +68,6 @@ export default class Articles extends Component {
             articleCount,
             articlesPage,
             activePage,
-            slug,
             activeTab,
         } = this.state;
         if (!this.state.articles) {
@@ -83,14 +86,14 @@ export default class Articles extends Component {
         return (
             <>
                 <h2 className=" text-center">article</h2>
-                <div className=" flex justify-between w">
+                <div className=" flex justify-between w-full">
                     <div className="pt-12 border-t dark:border-gray-700">
                         <FeedNav activeTab={activeTab} removeTab={this.removeTab} />
                         <hr />
                         {articles.map((d) => {
                             return (
                                 <div className="dark:bg-gray-800 dark:text-gray-100">
-                                    <div className=" container max-w-7xl px-10 py-6 mx-auto w-full rounded-lg shadow-sm bg-slate-50 m-4">
+                                    <div className=" container max-w-7xl w-full px-10 py-6 mx-auto rounded-lg shadow-sm bg-slate-50 m-4">
                                         <div className="flex items-center justify-between">
                                             <span className="text-sm dark:text-gray-400">
                                                 {d.article.createdAt}
@@ -101,7 +104,7 @@ export default class Articles extends Component {
                                                     rel="noopener noreferrer"
                                                     className="px-4 py-1 font-bold rounded dark:bg-violet-400 dark:text-gray-900"
                                                 >
-                                                    {d.article.taglist}
+                                                    {d.article.taglist + " "}
                                                 </NavLink>
                                             </Route>
                                         </div>
@@ -118,7 +121,7 @@ export default class Articles extends Component {
                                         <div className="flex items-center justify-between mt-4">
                                             <Route>
                                                 <NavLink
-                                                    to={`/article/${slug}`}
+                                                    to={`/article/${d.article.slug}`}
                                                     rel="noopener noreferrer"
                                                     className="hover:underline dark:text-violet-400"
                                                 >

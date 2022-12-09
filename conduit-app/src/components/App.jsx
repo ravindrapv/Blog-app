@@ -23,7 +23,7 @@ function App() {
           <Registreation />
         </Route>
         <Route path='/article/:slug' component={SingelPage} />
-        <Route path='#'>
+        <Route path='*'>
           <Nomath />
         </Route>
       </Switch>
