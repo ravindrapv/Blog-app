@@ -37,14 +37,16 @@ class Tags extends React.Component {
             return <p className="text-center p-4">{error}</p>;
         }
         return (
-            <div className="w-1/4 bg-pink h-full">
+            <div className="bg-pink h-full flex flex-wrap w-1/3">0
                 <h4>filter by Tags</h4>
                 <h2 className="text-center text-xl capitalize blue p-2">sidebar</h2>
                 <div className="tags flex flex-wrap p-2">
                     {this.state.tags ? (
                         this.state.tags.map((tag, i) => {
                             return (
-                                <Tag handleState={this.props.handleState} tag={tag} key={i} />
+                                <span key={tag} className="text-xs tag  py-1 px-2 m-1 border-solid border rounded-md border-blue-900 blue capitalize" onClick={() => this.props.addTab(tag)}>
+                                    {tag}
+                                </span>
                             );
                         })
                     ) : (
@@ -62,19 +64,5 @@ class Tags extends React.Component {
     }
 }
 
-function Tag(props) {
-    return (
-        <a
-            onClick={(event) => {
-                event.preventDefault();
-                props.handleState("openTag", props.tag);
-            }}
-            className="text-xs tag  py-1 px-2 m-1 border-solid border rounded-md border-blue-900 blue capitalize"
-            href="/"
-        >
-            {props.tag}
-        </a>
-    );
-}
 
 export default Tags;

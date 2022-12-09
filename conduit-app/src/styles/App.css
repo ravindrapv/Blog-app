@@ -74,9 +74,10 @@ h1{
   color:rgb(131, 212, 131);
 }
 
+.error{
+  color: red;
+}
 
-.artical-main{
-  display: flex;
-  justify-content: space-around;
-  border: 2px solid black;
+:disabled{
+  background-color: gray;
 }
