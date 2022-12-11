@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
-export default class Registreation extends Component {
+import { withRouter } from "react-router-dom";
+let url = `https://conduitapi.onrender.com/api`
+class Registreation extends Component {
     state = {
         username: "",
         email: "",
@@ -45,6 +46,30 @@ export default class Registreation extends Component {
 
     handelSubmit = (event) => {
         event.preventDefault();
+        const { email, password, username } = this.state;
+        fetch(url + '/users', {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ user: { username, email, password } }),
+        })
+            .then(async (response) => {
+                if (!response.ok) {
+                    const { errors } = await response.json();
+                    return await Promise.reject(errors);
+                    // throw new Error("fatch not Success");
+                }
+                return response.json()
+            })
+            .then(({ user }) => {
+                this.props.UpdatUser(user);
+                this.setState({ username: "", password: "", email: "" })
+                this.props.history.push('/Login');
+            })
+            .catch((errors) =>
+                this.setState({ errors })
+            );
     };
     render() {
         const { email, password, errors, username } = this.state;
@@ -59,7 +84,7 @@ export default class Registreation extends Component {
                         <form className="mt-6" onSubmit={this.handelSubmit}>
                             <div>
                                 <label
-                                    for="username"
+                                    htmlFor="username"
                                     className="block text-sm text-gray-800 dark:text-gray-200"
                                 >
                                     Username
@@ -68,14 +93,14 @@ export default class Registreation extends Component {
                                     type="text"
                                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                     name="username"
-                                    value={username}
+                                    defaultValue={username}
                                     onChange={this.handelChange}
                                 />
                             </div>
                             <span className="error">{errors.username}</span>
                             <div>
                                 <label
-                                    for="email"
+                                    htmlFor="email"
                                     className="block text-sm text-gray-800 dark:text-gray-200"
                                 >
                                     email
@@ -83,7 +108,7 @@ export default class Registreation extends Component {
                                 <input
                                     type="text"
                                     name="email"
-                                    value={email}
+                                    defaultValue={email}
                                     onChange={this.handelChange}
                                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                 />
@@ -92,12 +117,12 @@ export default class Registreation extends Component {
                             <div className="mt-4">
                                 <div className="flex items-center justify-between">
                                     <label
-                                        for="password"
+                                        htmlFor="password"
                                     >
                                         Password
                                     </label>
                                     <Link
-                                        href="#"
+                                        to="/forgetpassword"
                                         className="text-xs text-gray-600 dark:text-gray-400 hover:underline"
                                     >
                                         Forget Password?
@@ -106,7 +131,7 @@ export default class Registreation extends Component {
                                 <input
                                     type="password"
                                     name="password"
-                                    value={password}
+                                    defaultValue={password}
                                     onChange={this.handelChange}
                                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                 />
@@ -115,9 +140,9 @@ export default class Registreation extends Component {
                             <div className="mt-6">
                                 <input
                                     className=" text-center w-full px-6 py-2.5 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
-                                    type="sumbmit"
+                                    type="submit"
                                     disabled={errors.email || errors.password || errors.username}
-                                    value="Sign up"
+                                    defaultValue="Sign up"
                                 />
                             </div>
                         </form>
@@ -127,3 +152,5 @@ export default class Registreation extends Component {
         );
     }
 }
+
+export default withRouter(Registreation);

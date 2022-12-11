@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Link, Route } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+let url = `https://conduitapi.onrender.com/api`
 
-export default class Login extends Component {
+class Login extends Component {
     state = {
         email: "",
         password: "",
@@ -40,6 +42,38 @@ export default class Login extends Component {
 
     handelSubmit = (event) => {
         event.preventDefault();
+        const { email, password } = this.state;
+        fetch(url + '/users/login', {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ user: { email, password } }),
+        })
+            .then(async (response) => {
+                if (!response.ok) {
+
+                    const { errors } = await response.json();
+                    return await Promise.reject(errors);
+                }
+                return response.json()
+            })
+            .then(({ user }) => {
+                this.props.UpdatUser(user)
+                this.setState({ password: "", email: "" });
+                this.props.history.push('/');
+            })
+            .catch((error) => {
+                this.setState((prevState) => {
+                    return {
+                        ...prevState,
+                        errors: {
+                            ...prevState.error,
+                            email: "email or password is incorrect"
+                        }
+                    }
+                });
+            });
     };
     render() {
         const { email, Password, errors } = this.state;
@@ -60,7 +94,7 @@ export default class Login extends Component {
                                 Login or create account
                             </p>
 
-                            <form>
+                            <form onSubmit={this.handelSubmit}>
                                 <div className="w-full mt-4">
                                     <input
                                         className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
@@ -68,7 +102,7 @@ export default class Login extends Component {
                                         placeholder="Email Address"
                                         aria-label="Email Address"
                                         name="email"
-                                        value={email}
+                                        defaultValue={email}
                                         onChange={this.handelChange}
                                     />
                                 </div>
@@ -81,15 +115,15 @@ export default class Login extends Component {
                                         placeholder="Password"
                                         aria-label="Password"
                                         name="password"
-                                        value={Password}
+                                        defaultValue={Password}
                                         onChange={this.handelChange}
                                     />
                                 </div>
                                 <span className="error">{errors.password}</span>
 
                                 <div className="flex items-center justify-between mt-4">
-                                    <Link
-                                        path="/"
+                                    <Link to="/forget"
+                                        path="/password/reset"
                                         className="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500"
                                     >
                                         Forget Password?
@@ -97,9 +131,9 @@ export default class Login extends Component {
 
                                     <input
                                         className=" text-center px-0.5 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
-                                        type="sumbmit"
+                                        type="submit"
                                         disabled={errors.email || errors.password}
-                                        value="Sign in"
+                                        defaultValue="Sign in"
                                     />
                                 </div>
                             </form>
@@ -123,3 +157,5 @@ export default class Login extends Component {
         );
     }
 }
+
+export default withRouter(Login)
