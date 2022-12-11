@@ -6,7 +6,7 @@ export default function Profile() {
                 <div>
                     <a href="/">
                         <h3 className="text-4xl font-bold text-purple-600">
-                            Add New Article
+                            Profile
                         </h3>
                     </a>
                 </div>
