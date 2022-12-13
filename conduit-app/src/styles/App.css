@@ -83,6 +83,17 @@ h1{
 }
 
 .center{
- margin: 0 auto;
- padding: 0 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.loader {
+  height: 100px;
+  width: 100px;
+  border: 10px solid rgba(21, 36, 175, 0.4);
+  border-top-color: rgb(63, 182, 8);
+  border-radius: 50%;
+  animation: spin 1.5s linear infinite;
 }

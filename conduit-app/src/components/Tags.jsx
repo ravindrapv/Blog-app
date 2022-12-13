@@ -37,7 +37,7 @@ class Tags extends React.Component {
             return <p className="text-center p-4">{error}</p>;
         }
         return (
-            <div className="bg-pink h-full flex flex-wrap w-1/3">
+            <div className=" bg-slate-200 h-full flex flex-wrap w-1/4 border py-8 px-4 rounded-3xl">
                 <h4>filter by Tags</h4>
                 <h2 className="text-center text-xl capitalize blue p-2">sidebar</h2>
                 <div className="tags flex flex-wrap p-2">

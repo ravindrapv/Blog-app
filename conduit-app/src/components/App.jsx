@@ -50,7 +50,7 @@ class App extends Component {
     localStorage.setItem(localStorageKey, user.token)
   }
   render() {
-    if (!this.state.isVerifiying) {
+    if (this.state.isVerifiying) {
       return <div className="flex items-center justify-center space-x-2">
         <div className="w-4 h-4 rounded-full animate-pulse bg-gray-900"></div>
         <div className="w-4 h-4 rounded-full animate-pulse bg-gray-900"></div>
@@ -61,7 +61,7 @@ class App extends Component {
       <>
         <Heder isLogin={this.state.isLogin} user={this.state.user} />
         {
-          this.state.isLogin ? <AuthUser /> : <UnAuthuser UpdatUser={this.UpdatUser} />
+          this.state.isLogin ? <AuthUser user={this.state.user} /> : <UnAuthuser UpdatUser={this.UpdatUser} user={this.state.user} />
         }
       </>
     )
@@ -69,7 +69,7 @@ class App extends Component {
 }
 
 
-function AuthUser() {
+function AuthUser(props) {
   return (
     <>
       <Route path="/" exact>
@@ -85,7 +85,9 @@ function AuthUser() {
       <Route path="/Profile">
         <Profile />
       </Route>
-      <Route path='/article/:slug' component={SingelPage} />
+      <Route path='/article/:slug'>
+        <SingelPage user={props.user} />
+      </Route>
       <Route path='#'>
         <Nomath />
       </Route>
@@ -108,13 +110,14 @@ function UnAuthuser(props) {
         <Route path="/Registreation">
           <Registreation UpdatUser={props.UpdatUser} />
         </Route>
-        <Route path='/article/:slug' component={SingelPage} />
+        <Route path='/article/:slug'>
+          <SingelPage user={props.user} />
+        </Route>
         <Route path='#'>
           <Nomath />
         </Route>
       </Switch>
     </>
-
   )
 }
 export default App

@@ -50,11 +50,12 @@ class Login extends Component {
             },
             body: JSON.stringify({ user: { email, password } }),
         })
-            .then(async (response) => {
+            .then((response) => {
                 if (!response.ok) {
 
-                    const { errors } = await response.json();
-                    return await Promise.reject(errors);
+                    return response.json().then(({ errors }) => {
+                        return Promise.reject(errors)
+                    });
                 }
                 return response.json()
             })

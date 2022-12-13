@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 let url = 'https://conduitapi.onrender.com/api/articles'
-export default class SingelPage extends Component {
+class SingelPage extends Component {
     state = {
         article: '',
         error: '',
@@ -58,18 +58,23 @@ export default class SingelPage extends Component {
                             <p>{article.article.body}</p>
                         </div>
                     </article>
-                    <div>
-                        <div className="flex flex-wrap py-6 space-x-2 border-t border-dashed dark:border-gray-400">
-                            <Link to='/' rel="noopener noreferrer" href="#" className="px-3 py-1 rounded-sm hover:underline dark:bg-violet-400 dark:text-gray-900">{article.article.taglist + "  "}</Link>
+                    {this.props.user === null ? (
+                        <div>
+                            <div className="flex flex-wrap py-6 space-x-2 border-t border-dashed dark:border-gray-400">
+                                <Link to='/' rel="noopener noreferrer" href="#" className="px-3 py-1 rounded-sm hover:underline dark:bg-violet-400 dark:text-gray-900">{article.article.taglist + "  "}</Link>
+                            </div>
+                            <div className="space-y-2">
+                                <h4 className="text-lg font-semibold">comments</h4>
+                                <p>to add comments
+                                    <Link className=' text-amber-800' to='/Login'> Login </Link>or
+                                    <Link className=' text-green-500' to='/Registreation'>  Register  </Link>
+                                </p>
+                            </div>
                         </div>
-                        <div className="space-y-2">
-                            <h4 className="text-lg font-semibold">comments</h4>
-                            <p>to add comments
-                                <Link className=' text-amber-800' to='/Login'> Login </Link>or
-                                <Link className=' text-green-500' to='/Registreation'>  Register  </Link>
-                            </p>
-                        </div>
-                    </div>
+                    ) : (
+                        ""
+                    )
+                    }
                 </div>
                 <footer>
                     <hr />
@@ -157,3 +162,4 @@ export default class SingelPage extends Component {
         )
     }
 }
+export default withRouter(SingelPage);

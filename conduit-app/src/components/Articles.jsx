@@ -22,14 +22,16 @@ export default class Articles extends Component {
     };
     componentDidMount() {
         this.fetchData();
+        console.log("first time");
     }
+
 
     componentDidUpdate(_prevProps, prevStat) {
         if (prevStat.activePage !== this.state.activePage ||
-            prevStat.activeTab !== this.state.activePage) {
+            prevStat.activeTab !== this.state.activeTab) {
             this.fetchData();
         }
-
+        console.log("prevstat.active", prevStat.activePage, "priveactiveTab", prevStat.activeTab, "activePage", this.state.activePage);
     }
 
     fetchData = () => {
@@ -72,7 +74,9 @@ export default class Articles extends Component {
         } = this.state;
         if (!this.state.articles) {
             return (
-                <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin dark:border-green-400"></div>
+                <div className=" center">
+                    <div className="loader"></div>
+                </div>
             );
         }
 
@@ -86,14 +90,14 @@ export default class Articles extends Component {
         return (
             <>
                 <h2 className=" text-center">article</h2>
-                <div className=" flex justify-between w-full">
+                <div className="flex justify-between w-fit">
                     <div className="pt-12 border-t dark:border-gray-700">
                         <FeedNav activeTab={activeTab} removeTab={this.removeTab} />
                         <hr />
                         {articles.map((d) => {
                             return (
                                 <div className="dark:bg-gray-800 dark:text-gray-100">
-                                    <div className=" container max-w-7xl w-full px-10 py-6 mx-auto rounded-lg shadow-sm bg-slate-50 m-4">
+                                    <div className=" container max-w-3xl px-10 py-6 mx-auto rounded-lg shadow-sm bg-slate-50 m-4">
                                         <div className="flex items-center justify-between">
                                             <span className="text-sm dark:text-gray-400">
                                                 {d.article.createdAt}
